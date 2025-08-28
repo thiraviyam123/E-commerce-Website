@@ -1,0 +1,79 @@
+/* LoginPage.css */
+
+.login-container {
+  max-width: 350px;
+  margin: 100px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.login-container label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.login-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.login-container button:hover {
+  background-color: #0056b3;
+}
+
+.login-container p {
+  text-align: center;
+  color: green;
+  margin-top: 15px;
+}
+/* Add this to your Login.css file */
+
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-container input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;  /* Adjust padding to make space for the icon inside */
+  box-sizing: border-box;  /* Ensures padding doesn't affect width */
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;  /* Position the icon inside the input field */
+  top: 50%;  /* Vertically center the icon */
+  transform: translateY(-50%);  /* Adjust for exact centering */
+  cursor: pointer;
+  font-size: 18px;  /* Size of the icon */
+  color: #333;  /* Icon color */
+}
