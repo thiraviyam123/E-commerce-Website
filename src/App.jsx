@@ -8,6 +8,9 @@ import Help from './Help';
 import Navbar from './Navbar';
 import LoginPage from './Login';
 import ProductList from './Fetch';
+import Chatbot from './chatbot';
+
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,6 +19,7 @@ function App() {
     <BrowserRouter>
       <Navbar isLoggedIn={isLoggedIn} />
        <div style={{ paddingTop: '60px' }}>
+     
       <Routes>
         {/* If logged in, redirect "/" to "/product" */}
         <Route
@@ -28,6 +32,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/service" element={<Service />} />
         <Route path="/help" element={<Help />} />
+        <Route path="/AI" element={<Chatbot/>} />
+       
 
         {/* Protect product route: only accessible if logged in */}
         <Route

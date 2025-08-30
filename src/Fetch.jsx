@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import './Fetch.css';
 function CartFooter({ cart, onOpenCart }) {
   return (
     <footer
@@ -18,7 +18,8 @@ function CartFooter({ cart, onOpenCart }) {
       }}
     >
       <div>🛒 Cart Items: {cart.reduce((sum, item) => sum + item.quantity, 0)}</div>
-      <button
+      <div>
+ <button
         onClick={onOpenCart}
         style={{
           backgroundColor: '#4CAF50',
@@ -34,11 +35,14 @@ function CartFooter({ cart, onOpenCart }) {
       >
         View Cart
       </button>
+
+      </div>
+     
     </footer>
   );
 }
 
-function CartModal({ cart, onClose, onBuy }) {
+function CartModal({ cart, onClose, onBuy, updateCart, removeFromCart }) {
   // Calculate total amount with quantity considered
   const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2);
 
@@ -111,6 +115,48 @@ function CartModal({ cart, onClose, onBuy }) {
                     <p style={{ margin: 0 }}>
                       ${item.price.toFixed(2)} x {item.quantity} = ${(item.price * item.quantity).toFixed(2)}
                     </p>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <button
+                        onClick={() => updateCart(item.id, 'decrease')}
+                        style={{
+                          backgroundColor: '#ddd',
+                          border: 'none',
+                          padding: '5px 10px',
+                          margin: '0 5px',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        -
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button
+                        onClick={() => updateCart(item.id, 'increase')}
+                        style={{
+                          backgroundColor: '#ddd',
+                          border: 'none',
+                          padding: '5px 10px',
+                          margin: '0 5px',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        +
+                      </button>
+                      {/* Remove Button */}
+                      <button
+                        onClick={() => removeFromCart(item.id)}
+                        style={{
+                          backgroundColor: '#166e0eff',
+                          border: 'none',
+                          padding: '5px 10px',
+                          marginLeft: '10px',
+                          cursor: 'pointer',
+                          color: 'white',
+                          borderRadius: '4px',
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
                 </li>
               ))}
@@ -164,6 +210,31 @@ function ProductList() {
     });
   };
 
+  // Update cart (increase/decrease quantity)
+  const updateCart = (itemId, action) => {
+    setCart((prevCart) =>
+      prevCart.map((item) => {
+        if (item.id === itemId) {
+          if (action === 'increase') {
+            return { ...item, quantity: item.quantity + 1 };
+          } else if (action === 'decrease') {
+            if (item.quantity > 1) {
+              return { ...item, quantity: item.quantity - 1 };
+            } else {
+              return { ...item, quantity: 0 }; // Remove item if quantity is 0
+            }
+          }
+        }
+        return item;
+      }).filter(item => item.quantity > 0) // Filter out items with quantity 0
+    );
+  };
+
+  // Remove item from cart
+  const removeFromCart = (itemId) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
+  };
+
   // Buy button handler
   const handleBuy = () => {
     alert(
@@ -184,7 +255,7 @@ function ProductList() {
   return (
     <>
       <div style={{ padding: '20px', paddingBottom: '100px' }}>
-        <h2>Product List</h2>
+        <h2>Trending Product</h2>
 
         {/* Search Bar */}
         <input
@@ -217,6 +288,7 @@ function ProductList() {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   minHeight: '360px',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.44)',
                 }}
               >
                 <img
@@ -239,6 +311,7 @@ function ProductList() {
                 </p>
                 <strong style={{ textAlign: 'center' }}>${product.price}</strong>
                 <button
+                className='cart'
                   onClick={() => addToCart(product)}
                   style={{
                     marginTop: '10px',
@@ -248,6 +321,7 @@ function ProductList() {
                     color: 'white',
                     borderRadius: '4px',
                     cursor: 'pointer',
+                      
                   }}
                 >
                   Add to Cart
@@ -262,7 +336,15 @@ function ProductList() {
 
       <CartFooter cart={cart} onOpenCart={() => setIsCartOpen(true)} />
 
-      {isCartOpen && <CartModal cart={cart} onClose={() => setIsCartOpen(false)} onBuy={handleBuy} />}
+      {isCartOpen && (
+        <CartModal
+          cart={cart}
+          onClose={() => setIsCartOpen(false)}
+          onBuy={handleBuy}
+          updateCart={updateCart}
+          removeFromCart={removeFromCart}
+        />
+      )}
     </>
   );
 }

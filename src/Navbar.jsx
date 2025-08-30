@@ -1,57 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from './images/logo.PNG';
-import { FaPhone, FaServicestack, FaQuestionCircle,FaBoxOpen  } from 'react-icons/fa';
+import logo from './images/logo2.jpg';
+import { FaPhone, FaServicestack, FaQuestionCircle, FaBoxOpen, FaBars, FaTimes,FaRobot } from 'react-icons/fa';
 import { FaLock } from 'react-icons/fa6';
-
-
-
+import './Navbar.css'; // create this file next
 
 function Navbar({ isLoggedIn }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const closeSidebar = () => setSidebarOpen(false);
+
   return (
-    <nav
-      style={{
-        background: '#4CAF50',
-        padding: '10px',
+    <>
+      <nav className="navbar">
+        <div className="navbar-left">
+          <img src={logo} alt="Logo" className="navbar-logo" />
+        </div>
 
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        
-    borderRadius:'2px',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-         zIndex: 1000,
-        width: '100%',
-        height:'50px'
-       
-       
-      }}
-    >
-      <div>
- <img
-          src={logo}  // <-- replace this with your logo path or URL
-          alt="Logo"
-         style={{width:"50px",height:"50px",borderRadius:"50%"}}
-        />
+        <div className="navbar-right desktop-only">
+          <Link to="/contact"  style={{ textDecoration: 'none', color: 'white' }}>Contact <FaPhone /></Link>
+          <Link to="/service"  style={{ textDecoration: 'none', color: 'white' }}>Service <FaServicestack /></Link>
+          <Link to="/help"  style={{ textDecoration: 'none', color: 'white' }}>Help <FaQuestionCircle /></Link>
+          <Link to="/AI"  style={{ textDecoration: 'none', color: 'white' }}>AI <FaRobot /></Link>
+          {!isLoggedIn && <Link to="/"  style={{ textDecoration: 'none', color: 'white' }}>Login <FaLock /></Link>}
+          {isLoggedIn && <Link to="/product"  style={{ textDecoration: 'none', color: 'white' }}>Product <FaBoxOpen /></Link>}
+        </div>
+
+        <div className="hamburger mobile-only" onClick={toggleSidebar}>
+          <FaBars />
+        </div>
+      </nav>
+
+      {/* Sidebar for mobile */}
+      <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+        <button className="close-btn" onClick={closeSidebar}><FaTimes /></button>
+        <Link to="/contact" onClick={closeSidebar} style={{ textDecoration: 'none', color: 'white' }}>Contact <FaPhone /></Link>
+        <Link to="/service" onClick={closeSidebar} style={{ textDecoration: 'none', color: 'white' }}>Service <FaServicestack /></Link>
+        <Link to="/help" onClick={closeSidebar} style={{ textDecoration: 'none', color: 'white' }}>Help <FaQuestionCircle /></Link>
+        <Link to="/AI" onClick={closeSidebar} style={{ textDecoration: 'none', color: 'white' }}>AI <FaRobot /></Link>
+        {!isLoggedIn && <Link to="/" onClick={closeSidebar} style={{ textDecoration: 'none', color: 'white' }}>Login <FaLock /></Link>}
+        {isLoggedIn && <Link to="/product" onClick={closeSidebar} style={{ textDecoration: 'none', color: 'white' }}>Product <FaBoxOpen /></Link>}
       </div>
-     <div style={{display:'flex',flexDirection:'row',columnGap:'50px',marginRight:'20px'}}>
-{/* <Link to="/menu" style={{textDecoration: 'none', paddingTop:'15px', color: 'black'}} >Menu</Link> */}
-        <Link to="/contact" style={{textDecoration: 'none', paddingTop:'15px', color: 'white'}}>Contact <FaPhone /></Link>
-        <Link to="/service" style={{textDecoration: 'none' , paddingTop:'15px', color: 'white'}}>Service<FaServicestack /></Link>
-        <Link to="/help" style={{textDecoration: 'none'  , paddingTop:'15px', color: 'white' }}>Help<FaQuestionCircle /></Link>
-      
-
-      {/* Right side links (Login / Product) */}
-      
-        {!isLoggedIn && <Link to="/" style={{ textDecoration: 'none', paddingTop:'15px', color: 'white' }}>Login <FaLock/></Link>}
-        {isLoggedIn && <Link to="/product" style={{ textDecoration: 'none', paddingTop:'15px' , color: 'white' }}>Product <FaBoxOpen /></Link>}
-      
-     </div>
-       
-        
-    </nav>
+    </>
   );
 }
 
