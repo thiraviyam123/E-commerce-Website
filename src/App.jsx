@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import Menu from './menu';
-import Contact from './contact';
+import Contact from './Contact';
 import Service from './Service';
 import Help from './Help';
 import Navbar from './Navbar';
