@@ -254,7 +254,7 @@ function ProductList() {
 
   return (
     <>
-      <div style={{ padding: '20px', paddingBottom: '100px' }}>
+      <div style={{  display: 'flex', flexWrap: 'wrap', gap: '20px',  justifyContent: 'center' }}>
         <h2>Trending Product</h2>
 
         {/* Search Bar */}
@@ -274,7 +274,7 @@ function ProductList() {
           }}
         />
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px',  justifyContent: 'center'}}>
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (
               <div

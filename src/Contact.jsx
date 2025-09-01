@@ -55,7 +55,7 @@ function Contact() {
           <FaInstagram style={{ ...styles.icon, color: '#E1306C' }} />
           <p style={styles.label}>Instagram</p>
           <a
-            href="https://instagram.com/your_username"
+            href="https://instagram.com/__thiraviyam"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.link}
